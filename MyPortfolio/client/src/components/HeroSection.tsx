@@ -4,7 +4,6 @@ import { ArrowDown, Github, Linkedin, Mail, MessageCircle, Download } from "luci
 import { motion } from "framer-motion";
 import { TypewriterText } from "./TypewriterText";
 import { MagneticWrapper } from "./MagneticWrapper";
-import cvFile from "../../../attached_assets/my-cv.pdf";
 import myNewPhoto from "../../../attached_assets/profile.png";
 
 interface HeroSectionProps {
@@ -148,7 +147,7 @@ export function HeroSection({ name, title, tagline, description, profileImage, l
               <MagneticWrapper strength={0.25}>
                 <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button size="lg" variant="secondary" asChild data-testid="button-download-cv">
-                    <a href={cvFile} download="my-cv.pdf">
+                    <a href="/my-cv.pdf" download="my-cv.pdf" target="_blank" rel="noopener noreferrer">
                       <Download className="mr-2 h-4 w-4" />
                       Download CV
                     </a>
