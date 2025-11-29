@@ -4,8 +4,8 @@ import { ArrowDown, Github, Linkedin, Mail, MessageCircle, Download } from "luci
 import { motion } from "framer-motion";
 import { TypewriterText } from "./TypewriterText";
 import { MagneticWrapper } from "./MagneticWrapper";
-import cvFile from "@assets/my-cv.pdf";
-import myNewPhoto from "@assets/profile.png";
+import cvFile from "../../../attached_assets/my-cv.pdf";
+import myNewPhoto from "../../../attached_assets/profile.png";
 
 interface HeroSectionProps {
   name: string;
