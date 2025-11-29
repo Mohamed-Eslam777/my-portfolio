@@ -148,7 +148,7 @@ export function HeroSection({ name, title, tagline, description, profileImage, l
               <MagneticWrapper strength={0.25}>
                 <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button size="lg" variant="secondary" asChild data-testid="button-download-cv">
-                    <a href={cvFile} download="Mohammed_Maklad_CV.pdf">
+                    <a href={cvFile} download="my-cv.pdf">
                       <Download className="mr-2 h-4 w-4" />
                       Download CV
                     </a>
