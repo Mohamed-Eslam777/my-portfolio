@@ -3,7 +3,8 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 
-const app = express();
+// 1. (مهم) ضفنا export هنا عشان فيرسل يشوف التطبيق
+export const app = express();
 const httpServer = createServer(app);
 
 declare module "http" {
@@ -59,7 +60,8 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
+// بنعمل دالة للبدء عشان نقدر نستخدمها بمرونة
+const startServer = async () => {
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -70,9 +72,6 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   } else {
@@ -80,13 +79,16 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-const port = parseInt(process.env.PORT || "5000", 10);
-  // تم إزالة host و reusePort ليعمل على ويندوز
-  httpServer.listen(port, () => {
-    log(`serving on port ${port}`);
-  });
-})();
+  // 2. (مهم) بنخلي السيرفر يسمع على البورت فقط لو مش على فيرسل
+  // فيرسل بيشغل التطبيق كـ Serverless Function فمش محتاج listen
+  if (process.env.NODE_ENV !== "production") {
+    const port = parseInt(process.env.PORT || "5000", 10);
+    httpServer.listen(port, () => {
+      log(`serving on port ${port}`);
+    });
+  }
+};
+
+// بنشغل السيرفر
+// وبنصدر الـ Promise عشان نضمن ان فيرسل يستنى التحميل
+export const setupPromise = startServer();
