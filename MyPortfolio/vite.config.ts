@@ -1,24 +1,18 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
+  root: path.join(process.cwd(), "client"), // بنحدد الروت جوه client
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@shared": path.resolve(__dirname, "shared"),
+      "@": path.join(process.cwd(), "client", "src"),
+      "@shared": path.join(process.cwd(), "shared"),
     },
   },
-  // بنعرفه إن ملفات المصدر جوه client
-  root: path.resolve(__dirname, "client"),
   build: {
-    // بنخرج الملفات النهائية في فولدر dist في المشروع الرئيسي
-    outDir: path.resolve(__dirname, "dist"),
+    outDir: path.join(process.cwd(), "dist"), // بنخرج الملفات في dist بره خالص
     emptyOutDir: true,
   },
 });
