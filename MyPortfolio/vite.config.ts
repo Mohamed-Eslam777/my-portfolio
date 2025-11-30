@@ -1,19 +1,14 @@
-// Vercel update trigger
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: path.join(process.cwd(), "client"), // بنحدد الروت جوه client
-  resolve: {
-    alias: {
-      "@": path.join(process.cwd(), "client", "src"),
-      "@shared": path.join(process.cwd(), "shared"),
-    },
-  },
+  // الحل الأبسط والأضمن: مسار نسبي مباشر
+  root: 'client',
   build: {
-    outDir: path.join(process.cwd(), "dist"), // بنخرج الملفات في dist بره خالص
+    // نخرج من مجلد كلاينت خطوة للوراء ثم ندخل ديست
+    outDir: '../dist',
     emptyOutDir: true,
-  },
-});
+  }
+})
